@@ -35,7 +35,7 @@ pipeline{
         }
         stage("Deploy project to tomcat"){
             steps{
-                sh "mv /var/lib/jenkins/workspace/mutibranchpipeline_branch1/target/addressbook.war /opt/tomcat/webapps"
+                sh "mv /var/lib/jenkins/workspace/mutibranchpipeline_branch3/target/addressbook.war /opt/tomcat/webapps"
                echo "code packages sucessfully"
             }
         }
