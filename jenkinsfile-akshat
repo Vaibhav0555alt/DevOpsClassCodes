@@ -1,0 +1,44 @@
+pipeline{
+    agent any
+    stages{
+        stage("git checkout"){
+           steps{
+                echo "git checkout started"
+                git url: "https://github.com/Vaibhav0555alt/DevOpsClassCodes"
+           }
+        }
+        stage("compiling the code"){
+            steps{
+                echo "We are compiling the code"
+                sh "mvn compile"
+                echo "code compiled sucessfully"
+            }
+        }
+        stage("testing the code"){
+            steps{
+                sh "mvn test"
+                echo "code test sucessfully"
+            }
+        }
+        stage("Quality assurance"){
+            steps{
+                sh "mvn checkstyle:checkstyle"
+                recordIssues sourceCodeRetention: 'LAST_BUILD', tools: [checkStyle()]
+                echo "code QA sucessfully"
+            }
+        }
+        stage("Packageing the code"){
+            steps{
+                sh "mvn package"
+               echo "code packages sucessfully"
+            }
+        }
+        stage("Deploy project to tomcat"){
+            steps{
+                sh "/opt/tomcat/bin/shutdown.sh"
+                sh "mv /var/lib/jenkins/workspace/firstCiCd/target/addressbook.war /opt/tomcat/webapps"
+               echo "code packages sucessfully"
+            }
+        }
+    }
+}
